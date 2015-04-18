@@ -1,0 +1,52 @@
+{
+  "blueprint" : "home-ha",
+  "default_password" : "default",
+  "host_groups" :[
+    {
+      "name" : "host_group_m1",
+      "hosts" : [        
+        {
+          "fqdn" : "m1.hdp.local"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_m2",
+      "hosts" : [        
+        {
+          "fqdn" : "m2.hdp.local"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_sub_mstr",
+      "hosts" : [        
+        {
+          "fqdn" : "d1.hdp.local"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_dn_hbrgn",
+      "hosts" : [        
+        {
+          "fqdn" : "d2.hdp.local"
+        },
+        {
+          "fqdn" : "d4.hdp.local"
+        }
+      ]
+    },
+   {
+      "name" : "host_group_dn_ss",
+      "hosts" : [        
+        {
+          "fqdn" : "d3.hdp.local"
+        },
+        {
+          "fqdn" : "d5.hdp.local"
+        }
+      ]
+    }
+  ]
+}

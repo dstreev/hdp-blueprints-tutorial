@@ -1,0 +1,6 @@
+{
+  "Repositories" : {
+    "base_url" : "http://m1.hdp.local/repos/HDP/centos6/2.x/updates/2.2.4.5",
+    "verify_base_url" : true
+  }
+}
