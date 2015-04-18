@@ -1,10 +1,10 @@
 # Cluster Building via Blueprints.
 
-## Reset your cluster.
+## Reset your cluster with [strip_hdp](strip_hdp).
 
 This script is meant to run from a pdsh host configured with a host group to apply all these settings to.  Modify the [Data and Log Dirs](./strip_hdp/data_log_dirs.txt) text file to loop through all the directories to delete, post yum erase.  Modify the [Yum Packages](./strip_hdp/yum_packages.txt) text file to loop through all the HDP packages to remove.
 
-## Cluster Buildout via Blueprint
+## [Cluster Buildout via Blueprint](cluster_via_blueprint.sh)
 
 ### Assumptions BEFORE attempting Blueprint Installation.
 
@@ -13,7 +13,7 @@ This script is meant to run from a pdsh host configured with a host group to app
     - Create the databases for Ambari, Hive, Ranger and Oozie.
     - Create the databases user (AND HOST combinations for MySql) with rights to the appropriate database.
 
-## Home-HA Cluster
+## Sample 1: Home-HA Cluster
 
 This is a 7 node cluster (2 masters, 5 Workers).  1 Worker Station supports the third ZooKeeper and Journal Nodes.  The other 4 Workers split roles with 2 Storm Supervisors and 2 Region Servers.
 
