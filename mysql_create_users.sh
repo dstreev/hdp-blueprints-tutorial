@@ -40,42 +40,42 @@ fi
 MYSQL=mysql
 
 # Ambari DB
-exec "${MYSQL}" "${CONN} CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}"
+exec "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}'"
 for i in $(eval echo ${AMBARI_HOSTS}); do
 echo "Ambari Host: ${i}"
-exec "${MYSQL}" "${CONN} CREATE USER '${AMBARI_USER}'@'${i}' IDENTIFIED BY '${AMBARI_USER_PASSWORD}'"
-exec "${MYSQL}" "${CONN} GRANT ALL PRIVILEGES ON ${AMBARI_DB}.* TO '${AMBARI_USER}'@'${i}'"
+exec "${MYSQL}" "${CONN} -e 'CREATE USER ''${AMBARI_USER}''@''${i}'' IDENTIFIED BY ''${AMBARI_USER_PASSWORD}'''"
+exec "${MYSQL}" "${CONN} -e 'GRANT ALL PRIVILEGES ON ${AMBARI_DB}.* TO ''${AMBARI_USER}''@''${i}'''"
 done
 
 # Hive DB
-exec "${MYSQL}" "${CONN} CREATE DATABASE IF NOT EXISTS ${HIVE_DB}"
+exec "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${HIVE_DB}'"
 for i in $(eval echo ${HIVE_HOSTS}); do
 echo "Hive Host: ${i}"
-exec "${MYSQL}" "${CONN} CREATE USER '${HIVE_USER}'@'${i}' IDENTIFIED BY '${HIVE_USER_PASSWORD}'"
-exec "${MYSQL}" "${CONN} GRANT ALL PRIVILEGES ON ${HIVE_DB}.* TO '${HIVE_USER}'@'${i}'"
+exec "${MYSQL}" "${CONN} -e 'CREATE USER ''${HIVE_USER}''@''${i}'' IDENTIFIED BY ''${HIVE_USER_PASSWORD}'''"
+exec "${MYSQL}" "${CONN} -e 'GRANT ALL PRIVILEGES ON ${HIVE_DB}.* TO ''${HIVE_USER}''@''${i}'''"
 done
 
 # Oozie DB
-exec "${MYSQL}" "${CONN} CREATE DATABASE IF NOT EXISTS ${OOZIE_DB}"
+exec "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${OOZIE_DB}'"
 for i in $(eval echo ${OOZIE_HOSTS}); do
 echo "OOZIE Host: ${i}"
-exec "${MYSQL}" "${CONN} CREATE USER '${OOZIE_USER}'@'${i}' IDENTIFIED BY '${OOZIE_USER_PASSWORD}'"
-exec "${MYSQL}" "${CONN} GRANT ALL PRIVILEGES ON ${OOZIE_DB}.* TO '${OOZIE_USER}'@'${i}'"
+exec "${MYSQL}" "${CONN} -e 'CREATE USER ''${OOZIE_USER}''@''${i}'' IDENTIFIED BY ''${OOZIE_USER_PASSWORD}'''"
+exec "${MYSQL}" "${CONN} -e 'GRANT ALL PRIVILEGES ON ${OOZIE_DB}.* TO ''${OOZIE_USER}''@''${i}'''"
 done
 
 # Ranger DB
-exec "${MYSQL}" "${CONN} CREATE DATABASE IF NOT EXISTS ${RANGER_DB}"
+exec "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${RANGER_DB}'"
 for i in $(eval echo ${RANGER_HOSTS}); do
 echo "RANGER Host: ${i}"
-exec "${MYSQL}" "${CONN} CREATE USER '${RANGER_USER}'@'${i}' IDENTIFIED BY '${RANGER_USER_PASSWORD}'"
-exec "${MYSQL}" "${CONN} GRANT ALL PRIVILEGES ON ${RANGER_DB}.* TO '${RANGER_USER}'@'${i}'"
+exec "${MYSQL}" "${CONN} -e 'CREATE USER ''${RANGER_USER}''@''${i}'' IDENTIFIED BY ''${RANGER_USER_PASSWORD}'''"
+exec "${MYSQL}" "${CONN} -e 'GRANT ALL PRIVILEGES ON ${RANGER_DB}.* TO ''${RANGER_USER}''@''${i}'''"
 done
 
 # Ranger Audit DB
-exec "${MYSQL}" "${CONN} CREATE DATABASE IF NOT EXISTS ${RANGER_AUDIT_DB}"
+exec "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${RANGER_AUDIT_DB}'"
 for i in $(eval echo ${RANGER_HOSTS}); do
 echo "RANGER_AUDIT Host: ${i}"
-exec "${MYSQL}" "${CONN} CREATE USER '${RANGER_AUDIT_USER}'@'${i}' IDENTIFIED BY '${RANGER_AUDIT_USER_PASSWORD}'"
-exec "${MYSQL}" "${CONN} GRANT ALL PRIVILEGES ON ${RANGER_AUDIT_DB}.* TO '${RANGER_AUDIT_USER}'@'${i}'"
+exec "${MYSQL}" "${CONN} -e 'CREATE USER ''${RANGER_AUDIT_USER}''@''${i}'' IDENTIFIED BY ''${RANGER_AUDIT_USER_PASSWORD}'''"
+exec "${MYSQL}" "${CONN} -e 'GRANT ALL PRIVILEGES ON ${RANGER_AUDIT_DB}.* TO ''${RANGER_AUDIT_USER}''@''${i}'''"
 done
 
