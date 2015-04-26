@@ -31,27 +31,21 @@ RANGER_HOSTS="% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3
 OOZIE_HOSTS="% localhost m2.hdp.local"
 
 
-if [ "$1" == "drop" ]; then
     RUN_DROP_SCRIPT=/tmp/hdp_drop_mysql_users.sql
+    echo "" > $RUN_DROP_SCRIPT
   for i in $(eval echo ${AMBARI_HOSTS}); do
-    echo "Drop Ambari User from: ${i}"
-    echo "DROP USER '${AMBARI_USER}'@'${i}'" > $RUN_DROP_SCRIPT
+    echo "DROP USER '${AMBARI_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
   for i in $(eval echo ${HIVE_HOSTS}); do
-    echo "Drop Hive User from: ${i}"
-    eval "DROP USER '${HIVE_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
+    eval "DROP USER '${HIVE_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
   for i in $(eval echo ${OOZIE_HOSTS}); do
-    echo "Drop Oozie User from: ${i}"
-    echo "DROP USER '${OOZIE_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${OOZIE_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
   for i in $(eval echo ${RANGER_HOSTS}); do
-    echo "Drop Ranger users from: ${i}"
-    echo "DROP USER '${RANGER_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
-    echo "DROP USER '${RANGER_AUDIT_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${RANGER_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${RANGER_AUDIT_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
-  exit
-fi
 
 RUN_SCRIPT=/tmp/hdp_create_mysql_users.sql
 
@@ -65,7 +59,6 @@ done
 # Hive DB
 echo "CREATE DATABASE IF NOT EXISTS ${HIVE_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${HIVE_HOSTS}); do
-echo "Hive Host: ${i}"
 echo "CREATE USER '${HIVE_USER}'@'${i}' IDENTIFIED BY '${HIVE_USER_PASSWORD}';" >> $RUN_SCRIPT
 echo "GRANT ALL PRIVILEGES ON ${HIVE_DB}.* TO '${HIVE_USER}'@'${i}';" >> $RUN_SCRIPT
 done
@@ -73,7 +66,6 @@ done
 # Oozie DB
 echo "CREATE DATABASE IF NOT EXISTS ${OOZIE_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${OOZIE_HOSTS}); do
-echo "OOZIE Host: ${i}"
 echo "CREATE USER '${OOZIE_USER}'@'${i}' IDENTIFIED BY '${OOZIE_USER_PASSWORD}';" >> $RUN_SCRIPT
 echo "GRANT ALL PRIVILEGES ON ${OOZIE_DB}.* TO '${OOZIE_USER}'@'${i}';" >> $RUN_SCRIPT
 done
@@ -81,7 +73,6 @@ done
 # Ranger DB
 echo "CREATE DATABASE IF NOT EXISTS ${RANGER_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${RANGER_HOSTS}); do
-echo "RANGER Host: ${i}"
 echo "CREATE USER '${RANGER_USER}'@'${i}' IDENTIFIED BY '${RANGER_USER_PASSWORD}';" >> $RUN_SCRIPT
 echo "GRANT ALL PRIVILEGES ON ${RANGER_DB}.* TO '${RANGER_USER}'@'${i}';" >> $RUN_SCRIPT
 done
@@ -89,8 +80,10 @@ done
 # Ranger Audit DB
 echo "CREATE DATABASE IF NOT EXISTS ${RANGER_AUDIT_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${RANGER_HOSTS}); do
-echo "RANGER_AUDIT Host: ${i}"
 echo "CREATE USER '${RANGER_AUDIT_USER}'@'${i}' IDENTIFIED BY '${RANGER_AUDIT_USER_PASSWORD}';" >> $RUN_SCRIPT
 echo "GRANT ALL PRIVILEGES ON ${RANGER_AUDIT_DB}.* TO '${RANGER_AUDIT_USER}'@'${i}';" >> $RUN_SCRIPT
 done
+
+echo "User DROP Script created: ${RUN_DROP_SCRIPT}"
+echo "User and Database Create script created: ${RUN_SCRIPT}"
 
