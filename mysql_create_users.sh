@@ -42,62 +42,62 @@ MYSQL=mysql
 if [ "$1" == "drop" ]; then
   for i in $(eval echo ${AMBARI_HOSTS}); do
     echo "Drop Ambari User from: ${i}"
-    eval "${MYSQL} ${CONN} -e 'DROP USER ''${AMBARI_USER}''@''${i}'''"
+    eval "DROP USER ''${AMBARI_USER}''@''${i}'''"
   done
   for i in $(eval echo ${HIVE_HOSTS}); do
     echo "Drop Hive User from: ${i}"
-    eval "${MYSQL} ${CONN} -e 'DROP USER ''${HIVE_USER}''@''${i}'''"
+    eval "DROP USER ''${HIVE_USER}''@''${i}'''"
   done
   for i in $(eval echo ${OOZIE_HOSTS}); do
     echo "Drop Oozie User from: ${i}"
-    eval "${MYSQL} ${CONN} -e 'DROP USER ''${OOZIE_USER}''@''${i}'''"
+    eval "DROP USER ''${OOZIE_USER}''@''${i}'''"
   done
   for i in $(eval echo ${RANGER_HOSTS}); do
     echo "Drop Ranger users from: ${i}"
-    eval "${MYSQL} ${CONN} -e 'DROP USER ''${RANGER_USER}''@''${i}'''"
-    eval "${MYSQL} ${CONN} -e 'DROP USER ''${RANGER_AUDIT_USER}''@''${i}'''"
+    eval "DROP USER ''${RANGER_USER}''@''${i}'''"
+    eval "DROP USER ''${RANGER_AUDIT_USER}''@''${i}'''"
   done
   exit
 fi
 
+RUN_SCRIPT=/tmp/hdp_mysql.sql
+
 # Ambari DB
-eval "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}'"
+echo "CREATE DATABASE IF NOT EXISTS ${AMBARI_DB};" > $RUN_SCRIPT
 for i in $(eval echo ${AMBARI_HOSTS}); do
-echo "Ambari Create: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER ''${AMBARI_USER}''@''${i}'' IDENTIFIED BY ''${AMBARI_USER_PASSWORD}'''"
-echo "Ambari Grant: ${i}"
-eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${AMBARI_DB}.* TO ''${AMBARI_USER}''@''${i}'''"
+echo "CREATE USER '${AMBARI_USER}'@'${i}' IDENTIFIED BY '${AMBARI_USER_PASSWORD}';" >> $RUN_SCRIPT
+echo "GRANT ALL PRIVILEGES ON ${AMBARI_DB}.* TO '${AMBARI_USER}'@'${i}';" >> $RUN_SCRIPT
 done
 
 # Hive DB
-eval "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${HIVE_DB}'"
+echo "CREATE DATABASE IF NOT EXISTS ${HIVE_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${HIVE_HOSTS}); do
 echo "Hive Host: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER ''${HIVE_USER}''@''${i}'' IDENTIFIED BY ''${HIVE_USER_PASSWORD}'''"
-eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${HIVE_DB}.* TO ''${HIVE_USER}''@''${i}'''"
+echo "CREATE USER '${HIVE_USER}'@'${i}' IDENTIFIED BY '${HIVE_USER_PASSWORD}';" >> $RUN_SCRIPT
+echo "GRANT ALL PRIVILEGES ON ${HIVE_DB}.* TO '${HIVE_USER}'@'${i}';" >> $RUN_SCRIPT
 done
 
 # Oozie DB
-eval "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${OOZIE_DB}'"
+echo "CREATE DATABASE IF NOT EXISTS ${OOZIE_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${OOZIE_HOSTS}); do
 echo "OOZIE Host: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER ''${OOZIE_USER}''@''${i}'' IDENTIFIED BY ''${OOZIE_USER_PASSWORD}'''"
-eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${OOZIE_DB}.* TO ''${OOZIE_USER}''@''${i}'''"
+echo "CREATE USER '${OOZIE_USER}'@'${i}' IDENTIFIED BY '${OOZIE_USER_PASSWORD}';" >> $RUN_SCRIPT
+echo "GRANT ALL PRIVILEGES ON ${OOZIE_DB}.* TO '${OOZIE_USER}'@'${i}';" >> $RUN_SCRIPT
 done
 
 # Ranger DB
-eval "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${RANGER_DB}'"
+echo "CREATE DATABASE IF NOT EXISTS ${RANGER_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${RANGER_HOSTS}); do
 echo "RANGER Host: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER ''${RANGER_USER}''@''${i}'' IDENTIFIED BY ''${RANGER_USER_PASSWORD}'''"
-eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${RANGER_DB}.* TO ''${RANGER_USER}''@''${i}'''"
+echo "CREATE USER '${RANGER_USER}'@'${i}' IDENTIFIED BY '${RANGER_USER_PASSWORD}';" >> $RUN_SCRIPT
+echo "GRANT ALL PRIVILEGES ON ${RANGER_DB}.* TO '${RANGER_USER}'@'${i}';" >> $RUN_SCRIPT
 done
 
 # Ranger Audit DB
-eval "${MYSQL}" "${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${RANGER_AUDIT_DB}'"
+echo "CREATE DATABASE IF NOT EXISTS ${RANGER_AUDIT_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${RANGER_HOSTS}); do
 echo "RANGER_AUDIT Host: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER ''${RANGER_AUDIT_USER}''@''${i}'' IDENTIFIED BY ''${RANGER_AUDIT_USER_PASSWORD}'''"
-eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${RANGER_AUDIT_DB}.* TO ''${RANGER_AUDIT_USER}''@''${i}'''"
+echo "CREATE USER '${RANGER_AUDIT_USER}'@'${i}' IDENTIFIED BY '${RANGER_AUDIT_USER_PASSWORD}';" >> $RUN_SCRIPT
+echo "GRANT ALL PRIVILEGES ON ${RANGER_AUDIT_DB}.* TO '${RANGER_AUDIT_USER}'@'${i}';" >> $RUN_SCRIPT
 done
 
