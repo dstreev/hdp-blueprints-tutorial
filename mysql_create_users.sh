@@ -25,10 +25,10 @@ RANGER_AUDIT_USER=ranger_logger
 RANGER_AUDIT_USER_PASSWORD=ranger
 
 # ALL HOSTS SHOULD contain localhost
-AMBARI_HOSTS="% localhost m1.hdp.local"
-HIVE_HOSTS="% localhost m1.hdp.local m2.hdp.local"
-RANGER_HOSTS="% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local d5.hdp.local"
-OOZIE_HOSTS="% localhost m2.hdp.local"
+AMBARI_HOSTS="\% localhost m1.hdp.local"
+HIVE_HOSTS="\% localhost m1.hdp.local m2.hdp.local"
+RANGER_HOSTS="\% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local d5.hdp.local"
+OOZIE_HOSTS="\% localhost m2.hdp.local"
 
 #--user=user_name --password=your_password db_name
 if [ "${MYSQL_ROOT_PASSWORD}" == "" ]; then
@@ -43,7 +43,7 @@ MYSQL=mysql
 eval "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}'"
 for i in $(eval echo ${AMBARI_HOSTS}); do
 echo "Ambari Host: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER \'${AMBARI_USER}\'@\'${i}\' IDENTIFIED BY \'${AMBARI_USER_PASSWORD}\''"
+eval "${MYSQL} ${CONN} -e 'CREATE USER ''${AMBARI_USER}''@''${i}'' IDENTIFIED BY ''${AMBARI_USER_PASSWORD}'''"
 eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${AMBARI_DB}.* TO ''${AMBARI_USER}''@''${i}'''"
 done
 
