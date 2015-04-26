@@ -32,9 +32,9 @@ OOZIE_HOSTS="% localhost m2.hdp.local"
 
 #--user=user_name --password=your_password db_name
 if [ "${MYSQL_ROOT_PASSWORD}" == "" ]; then
-    CONN="mysql -u ${MYSQL_ROOT_USER}"
+    CONN="-u ${MYSQL_ROOT_USER}"
 else
-    CONN="mysql --user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}"
+    CONN="--user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}"
 fi
 
 MYSQL=mysql
