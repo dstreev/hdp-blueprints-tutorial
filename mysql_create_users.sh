@@ -37,6 +37,8 @@ else
     CONN="--user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}"
 fi
 
+MYSQL=mysql
+
 if [ "$1" == "drop" ]; then
   for i in $(eval echo ${AMBARI_HOSTS}); do
     echo "Drop Ambari User from: ${i}"
@@ -57,8 +59,6 @@ if [ "$1" == "drop" ]; then
   done
   exit
 fi
-
-MYSQL=mysql
 
 # Ambari DB
 eval "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}'"
