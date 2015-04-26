@@ -26,15 +26,36 @@ RANGER_AUDIT_USER_PASSWORD=ranger
 
 # ALL HOSTS SHOULD contain localhost
 AMBARI_HOSTS="localhost m1.hdp.local"
-HIVE_HOSTS="\% localhost m1.hdp.local m2.hdp.local"
-RANGER_HOSTS="\% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local d5.hdp.local"
-OOZIE_HOSTS="\% localhost m2.hdp.local"
+HIVE_HOSTS="localhost m1.hdp.local m2.hdp.local"
+RANGER_HOSTS="localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local d5.hdp.local"
+OOZIE_HOSTS="localhost m2.hdp.local"
 
 #--user=user_name --password=your_password db_name
 if [ "${MYSQL_ROOT_PASSWORD}" == "" ]; then
     CONN="-u ${MYSQL_ROOT_USER}"
 else
     CONN="--user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}"
+fi
+
+if [ "$1" == "drop" ]; then
+  for i in $(eval echo ${AMBARI_HOSTS}); do
+    echo "Drop Ambari User from: ${i}"
+    eval "${MYSQL} ${CONN} -e 'DROP USER ''${AMBARI_USER}''@''${i}'''"
+  done
+  for i in $(eval echo ${HIVE_HOSTS}); do
+    echo "Drop Hive User from: ${i}"
+    eval "${MYSQL} ${CONN} -e 'DROP USER ''${HIVE_USER}''@''${i}'''"
+  done
+  for i in $(eval echo ${OOZIE_HOSTS}); do
+    echo "Drop Oozie User from: ${i}"
+    eval "${MYSQL} ${CONN} -e 'DROP USER ''${OOZIE_USER}''@''${i}'''"
+  done
+  for i in $(eval echo ${RANGER_HOSTS}); do
+    echo "Drop Ranger users from: ${i}"
+    eval "${MYSQL} ${CONN} -e 'DROP USER ''${RANGER_USER}''@''${i}'''"
+    eval "${MYSQL} ${CONN} -e 'DROP USER ''${RANGER_AUDIT_USER}''@''${i}'''"
+  done
+  exit
 fi
 
 MYSQL=mysql
