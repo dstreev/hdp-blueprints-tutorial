@@ -40,7 +40,7 @@ fi
 MYSQL=mysql
 
 # Ambari DB
-exec "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}'"
+$($MYSQL $CONN -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}')
 for i in $(eval echo ${AMBARI_HOSTS}); do
 echo "Ambari Host: ${i}"
 exec "${MYSQL}" "${CONN} -e 'CREATE USER ''${AMBARI_USER}''@''${i}'' IDENTIFIED BY ''${AMBARI_USER_PASSWORD}'''"
