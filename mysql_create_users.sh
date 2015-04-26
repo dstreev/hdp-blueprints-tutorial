@@ -31,7 +31,7 @@ RANGER_HOSTS="% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3
 OOZIE_HOSTS="% localhost m2.hdp.local"
 
 #--user=user_name --password=your_password db_name
-if [ "${MYSQL_ROOT_PASSWORD}" == "" ]; do
+if [ "${MYSQL_ROOT_PASSWORD}" == "" ]; then
     CONN="-u ${MYSQL_ROOT_USER}"
 else
     CONN="--user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}"
