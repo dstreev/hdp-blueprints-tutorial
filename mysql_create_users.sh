@@ -43,12 +43,12 @@ if [ "$1" == "drop" ]; then
   done
   for i in $(eval echo ${OOZIE_HOSTS}); do
     echo "Drop Oozie User from: ${i}"
-    eval "DROP USER '${OOZIE_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${OOZIE_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
   done
   for i in $(eval echo ${RANGER_HOSTS}); do
     echo "Drop Ranger users from: ${i}"
-    eval "DROP USER '${RANGER_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
-    eval "DROP USER '${RANGER_AUDIT_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${RANGER_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${RANGER_AUDIT_USER}'@'${i}'" >> $RUN_DROP_SCRIPT
   done
   exit
 fi
