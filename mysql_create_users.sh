@@ -43,7 +43,7 @@ MYSQL=mysql
 eval "${MYSQL} ${CONN} -e 'CREATE DATABASE IF NOT EXISTS ${AMBARI_DB}'"
 for i in $(eval echo ${AMBARI_HOSTS}); do
 echo "Ambari Host: ${i}"
-eval "${MYSQL} ${CONN} -e 'CREATE USER ''${AMBARI_USER}''@''${i}'' IDENTIFIED BY ''${AMBARI_USER_PASSWORD}'''"
+eval "${MYSQL} ${CONN} -e 'CREATE USER \'${AMBARI_USER}\'@\'${i}\' IDENTIFIED BY \'${AMBARI_USER_PASSWORD}\''"
 eval "${MYSQL} ${CONN} -e 'GRANT ALL PRIVILEGES ON ${AMBARI_DB}.* TO ''${AMBARI_USER}''@''${i}'''"
 done
 
