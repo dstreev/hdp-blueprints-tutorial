@@ -37,7 +37,7 @@ OOZIE_HOSTS="% localhost m2.hdp.local"
     echo "DROP USER '${AMBARI_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
   for i in $(eval echo ${HIVE_HOSTS}); do
-    eval "DROP USER '${HIVE_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${HIVE_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
   for i in $(eval echo ${OOZIE_HOSTS}); do
     echo "DROP USER '${OOZIE_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
