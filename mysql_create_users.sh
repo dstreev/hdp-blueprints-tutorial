@@ -25,7 +25,7 @@ RANGER_AUDIT_USER=ranger_logger
 RANGER_AUDIT_USER_PASSWORD=ranger
 
 # ALL HOSTS SHOULD contain localhost
-AMBARI_HOSTS="\% localhost m1.hdp.local"
+AMBARI_HOSTS="localhost m1.hdp.local"
 HIVE_HOSTS="\% localhost m1.hdp.local m2.hdp.local"
 RANGER_HOSTS="\% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local d5.hdp.local"
 OOZIE_HOSTS="\% localhost m2.hdp.local"
