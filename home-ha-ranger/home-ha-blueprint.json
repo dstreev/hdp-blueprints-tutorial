@@ -1323,7 +1323,7 @@
           "storm.zookeeper.retry.intervalceiling.millis" : "30000",
           "storm.zookeeper.retry.times" : "5",
           "storm.zookeeper.root" : "/storm",
-          "storm.zookeeper.servers" : "['%HOSTGROUP::host_group_m1%','%HOSTGROUP::host_group_m2%','%HOSTGROUP::host_group_sub_mstr%']",
+          "storm.zookeeper.servers" : "['%HOSTGROUP::host_group_dn_ss%']",
           "storm.zookeeper.session.timeout" : "20000",
           "supervisor.heartbeat.frequency.secs" : "5",
           "supervisor.monitor.frequency.secs" : "3",
@@ -1469,6 +1469,9 @@
           "name" : "HISTORYSERVER"
         },
         {
+          "name" : "RANGER_USERSYNC"
+        },
+        {
           "name" : "HIVE_SERVER"
         },
         {
@@ -1485,6 +1488,9 @@
         },
         {
           "name" : "SLIDER"
+        },
+        {
+          "name" : "RANGER_ADMIN"
         },
         {
           "name" : "HIVE_METASTORE"

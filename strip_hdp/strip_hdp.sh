@@ -12,9 +12,9 @@ CFG_DIRS=etc_dir.txt
 YUM_PACKAGES=yum_packages.txt
 DATA_LOG_DIRS=data_log_dirs.txt
 
-pdcp -g ${PDSH_GROUP} ${CFG_DIRS} /tmp
-pdcp -g ${PDSH_GROUP} ${YUM_PACKAGES} /tmp
-pdcp -g ${PDSH_GROUP} ${DATA_LOG_DIRS} /tmp
+pdcp -g ${PDSH_GROUP} -e /usr/bin/pdcp ${CFG_DIRS} /tmp
+pdcp -g ${PDSH_GROUP} -e /usr/bin/pdcp ${YUM_PACKAGES} /tmp
+pdcp -g ${PDSH_GROUP} -e /usr/bin/pdcp ${DATA_LOG_DIRS} /tmp
 
 pdsh -g ${PDSH_GROUP} 'for i in `cat /tmp/yum_packages.txt`;do yum -y erase "${i}";done'
 

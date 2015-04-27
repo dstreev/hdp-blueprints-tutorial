@@ -5,9 +5,8 @@
 /var/log/hive*
 /var/log/ambari*
 /hadoop/logs/*
-/dndata/hadoop/*
+/data/hadoop/*
 /usr/hdp/*
-/var/lib/ambari*
 /var/lib/ganglia*
 /var/lib/hadoop*
 /var/lib/hive
@@ -23,5 +22,3 @@
 /usr/lib/storm
 /etc/yum.repos.d/hdp*
 /etc/yum.repos.d/HDP*
-/etc/yum.repos.d/ambari*
-/etc/yum.repos.d/AMBARI*
