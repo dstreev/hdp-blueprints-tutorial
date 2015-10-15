@@ -1,8 +1,10 @@
+#!/bin/bash
+
 # Should be run on the MySQL Server as the root db user.
 
 # Adjust values to match your cluster configuration.
 MYSQL_ROOT_USER=root
-MYSQL_ROOT_PASSWORD=
+MYSQL_ROOT_PASSWORD=hadoop
 
 HIVE_DB=hive
 HIVE_USER=hive
@@ -21,14 +23,18 @@ RANGER_USER=ranger
 RANGER_USER_PASSWORD=ranger
 
 RANGER_AUDIT_DB=ranger_audit
-RANGER_AUDIT_USER=ranger_logger
+RANGER_AUDIT_USER=ranger_audit
 RANGER_AUDIT_USER_PASSWORD=ranger
+
+RANGER_KMS_DB=ranger_kms
+RANGER_KMS_USER=ranger_keyadmin
+RANGER_KMS_USER_PASSWORD=ranger
 
 # ALL HOSTS SHOULD contain localhost
 AMBARI_HOSTS="% localhost m1.hdp.local"
-HIVE_HOSTS="% localhost m1.hdp.local m2.hdp.local"
-RANGER_HOSTS="% localhost m1.hdp.local m2.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local d5.hdp.local"
-OOZIE_HOSTS="% localhost m2.hdp.local"
+HIVE_HOSTS="% localhost m1.hdp.local m2.hdp.local m3.hdp.local"
+RANGER_HOSTS="% localhost m1.hdp.local m2.hdp.local m3.hdp.local d1.hdp.local d2.hdp.local d3.hdp.local d4.hdp.local"
+OOZIE_HOSTS="% localhost m1.hdp.local m2.hdp.local m3.hdp.local"
 
 
     RUN_DROP_SCRIPT=/tmp/hdp_drop_mysql_users.sql
@@ -45,6 +51,7 @@ OOZIE_HOSTS="% localhost m2.hdp.local"
   for i in $(eval echo ${RANGER_HOSTS}); do
     echo "DROP USER '${RANGER_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
     echo "DROP USER '${RANGER_AUDIT_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
+    echo "DROP USER '${RANGER_KMS_USER}'@'${i}';" >> $RUN_DROP_SCRIPT
   done
 
 RUN_SCRIPT=/tmp/hdp_create_mysql_users.sql
@@ -82,6 +89,13 @@ echo "CREATE DATABASE IF NOT EXISTS ${RANGER_AUDIT_DB};" >> $RUN_SCRIPT
 for i in $(eval echo ${RANGER_HOSTS}); do
 echo "CREATE USER '${RANGER_AUDIT_USER}'@'${i}' IDENTIFIED BY '${RANGER_AUDIT_USER_PASSWORD}';" >> $RUN_SCRIPT
 echo "GRANT ALL PRIVILEGES ON ${RANGER_AUDIT_DB}.* TO '${RANGER_AUDIT_USER}'@'${i}';" >> $RUN_SCRIPT
+done
+
+# Ranger Audit DB
+echo "CREATE DATABASE IF NOT EXISTS ${RANGER_KMS_DB};" >> $RUN_SCRIPT
+for i in $(eval echo ${RANGER_HOSTS}); do
+echo "CREATE USER '${RANGER_KMS_USER}'@'${i}' IDENTIFIED BY '${RANGER_KMS_USER_PASSWORD}';" >> $RUN_SCRIPT
+echo "GRANT ALL PRIVILEGES ON ${RANGER_KMS_DB}.* TO '${RANGER_KMS_USER}'@'${i}';" >> $RUN_SCRIPT
 done
 
 echo "User DROP Script created: ${RUN_DROP_SCRIPT}"
